@@ -11,8 +11,27 @@ documentation = "https://docs.rs/clamber-core-rust"
 readme = "README.md"
 
 [dependencies]
+chrono = "0.4.41"
+jwt = "0.16.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tracing = "0.1.41"
 tracing-appender = "0.2.3"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+hmac = "0.12.1"
+sha2 = "0.10.8"
+hex = "0.4.3"
+sha1 = "0.10.6"
+bytes = "1.9.0"
+argon2 = "0.5.3"
+derive_builder = "0.20.2"
+anyhow = "1.0"
+thiserror = "2.0.16"
+
+[[example]]
+name = "jwt_usage"
+path = "examples/jwt_usage.rs"
+
+[[example]]
+name = "error_handling"
+path = "examples/error_handling.rs"

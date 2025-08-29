@@ -1,3 +1,4 @@
+use crate::error::{ClamberError, Result};
 use std::fs;
 use tracing::metadata::LevelFilter;
 use tracing_appender::non_blocking::WorkerGuard;
@@ -7,13 +8,18 @@ use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 use tracing_subscriber::{Layer, fmt};
 
-pub fn logger_start(service_name: &str, path: Option<String>) -> (WorkerGuard, WorkerGuard) {
+pub fn logger_start(
+    service_name: &str,
+    path: Option<String>,
+) -> Result<(WorkerGuard, WorkerGuard)> {
     let log_dir = match path {
         Some(p) => format!("{}/logs", p),
         None => format!("logs"),
     };
 
-    fs::create_dir_all(&log_dir).unwrap();
+    fs::create_dir_all(&log_dir).map_err(|_| ClamberError::DirectoryCreationError {
+        path: log_dir.clone(),
+    })?;
 
     let info_file = rolling::daily(&log_dir, format!("{}-info.log", service_name));
     let error_file = rolling::daily(&log_dir, format!("{}-error.log", service_name));
@@ -47,5 +53,5 @@ pub fn logger_start(service_name: &str, path: Option<String>) -> (WorkerGuard, W
         .with(console_layer)
         .init();
 
-    (info_guard, error_guard)
+    Ok((info_guard, error_guard))
 }
