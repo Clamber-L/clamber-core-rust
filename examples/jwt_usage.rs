@@ -48,7 +48,7 @@ fn example_convenience_functions() -> Result<()> {
     };
 
     // 生成token
-    let token = generate_token(&user)?;
+    let token = generate_token(&user, JwtConfig::default())?;
     println!("   生成的token: {}", token);
 
     // 检查token是否有效
@@ -98,13 +98,13 @@ fn example_different_payloads() -> Result<()> {
 
     // 字符串payload
     let simple_data = "Hello JWT World!";
-    let token1 = generate_token(&simple_data)?;
+    let token1 = generate_token(&simple_data, JwtConfig::default())?;
     let decoded_string: String = verify_token(&token1)?;
     println!("   字符串payload: {} -> {}", simple_data, decoded_string);
 
     // 数字payload
     let number_data = 42i32;
-    let token2 = generate_token(&number_data)?;
+    let token2 = generate_token(&number_data, JwtConfig::default())?;
     let decoded_number: i32 = verify_token(&token2)?;
     println!("   数字payload: {} -> {}", number_data, decoded_number);
 
@@ -126,7 +126,7 @@ fn example_different_payloads() -> Result<()> {
         metadata,
     };
 
-    let token3 = generate_token(&complex_data)?;
+    let token3 = generate_token(&complex_data, JwtConfig::default())?;
     let decoded_complex: ComplexData = verify_token(&token3)?;
     println!("   复杂结构体payload: {:?}", decoded_complex);
 

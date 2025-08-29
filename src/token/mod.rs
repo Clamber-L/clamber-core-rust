@@ -65,7 +65,7 @@ impl JwtManager {
         let mut claims = BTreeMap::new();
         claims.insert("payload".to_string(), payload_json);
         claims.insert("exp".to_string(), expire_time.timestamp().to_string());
-        claims.insert("iat".to_string(), Utc::now().timestamp().to_string());
+        claims.insert("createAt".to_string(), Utc::now().timestamp().to_string());
 
         let key: Hmac<Sha256> =
             Hmac::new_from_slice(self.config.secret.as_bytes()).map_err(|e| {
@@ -147,11 +147,11 @@ impl JwtManager {
 }
 
 // 便利函数：使用默认配置
-pub fn generate_token<T>(payload: &T) -> Result<String>
+pub fn generate_token<T>(payload: &T, config: JwtConfig) -> Result<String>
 where
     T: Serialize,
 {
-    let manager = JwtManager::default();
+    let manager = JwtManager::new(config);
     manager.generate_token(payload)
 }
 
@@ -211,7 +211,7 @@ mod tests {
             role: "user".to_string(),
         };
 
-        let token = generate_token(&user).unwrap();
+        let token = generate_token(&user, JwtConfig::default()).unwrap();
         let decoded_user: TestUser = verify_token(&token).unwrap();
 
         assert_eq!(user, decoded_user);

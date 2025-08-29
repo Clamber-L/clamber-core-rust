@@ -92,7 +92,7 @@ fn example_success_case() -> Result<()> {
     };
 
     // 使用便利函数
-    let token = generate_token(&user).map_err(|e| {
+    let token = generate_token(&user, JwtConfig::default()).map_err(|e| {
         println!("   生成token失败: {}", e);
         e
     })?;
@@ -157,7 +157,7 @@ fn demonstrate_error_handling_patterns() {
             email: "test@example.com".to_string(),
             role: "user".to_string(),
         };
-        let token = generate_token(&user)?;
+        let token = generate_token(&user, JwtConfig::default())?;
         let _decoded: User = verify_token(&token)?;
         Ok(())
     })();
