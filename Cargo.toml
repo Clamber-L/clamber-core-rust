@@ -10,3 +10,8 @@ homepage = "https://github.com/Clamber-L/clamber-core-rust"
 documentation = "https://docs.rs/clamber-core-rust"
 
 [dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1.41"
+tracing-appender = "0.2.3"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
