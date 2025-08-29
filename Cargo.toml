@@ -8,6 +8,7 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/Clamber-L/clamber-core-rust"
 homepage = "https://github.com/Clamber-L/clamber-core-rust"
 documentation = "https://docs.rs/clamber-core-rust"
+readme = "README.md"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
