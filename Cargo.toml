@@ -5,8 +5,8 @@ edition = "2024"
 authors = ["Clamber println_g1@163.com"]
 description = "library for clamber"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/yourname/your-crate"
-homepage = "https://github.com/yourname/your-crate"
-documentation = "https://docs.rs/your-crate"
+repository = "https://github.com/Clamber-L/clamber-core-rust"
+homepage = "https://github.com/Clamber-L/clamber-core-rust"
+documentation = "https://docs.rs/clamber-core-rust"
 
 [dependencies]
