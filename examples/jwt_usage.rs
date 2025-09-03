@@ -51,6 +51,11 @@ fn example_convenience_functions() -> Result<()> {
     let token = generate_token(&user, JwtConfig::default())?;
     println!("   生成的token: {}", token);
 
+    // 生成token(自定义secret)
+    let with_secret_config = JwtConfig::with_secret("my_secret_key_2024");
+    let secret_token = generate_token(&user, with_secret_config)?;
+    println!(" 生成的token: {}", secret_token);
+
     // 检查token是否有效
     let is_valid = is_valid_token(&token);
     println!("   Token有效性: {}", is_valid);

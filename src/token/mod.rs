@@ -6,6 +6,9 @@ use serde::{Serialize, de::DeserializeOwned};
 use sha2::Sha256;
 use std::collections::BTreeMap;
 
+
+const DEFAULT_JWT_SECRET: &'static str = "secret";
+
 /// JWT配置结构
 #[derive(Debug, Clone)]
 pub struct JwtConfig {
@@ -18,7 +21,7 @@ pub struct JwtConfig {
 impl Default for JwtConfig {
     fn default() -> Self {
         Self {
-            secret: "default_jwt_secret".to_string(),
+            secret: DEFAULT_JWT_SECRET.to_string(),
             expire_days: 7,
         }
     }
@@ -30,6 +33,14 @@ impl JwtConfig {
         Self {
             secret: secret.into(),
             expire_days,
+        }
+    }
+
+    /// 根据secret创建配置
+    pub fn with_secret(secret: impl Into<String>) -> Self {
+        Self {
+            secret: secret.into(),
+            expire_days: 7
         }
     }
 }

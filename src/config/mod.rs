@@ -1,6 +1,6 @@
 use crate::error::{ClamberError, Result};
 use config::{Config, Environment, File, FileFormat};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use std::collections::HashMap;
 use std::env;
 use std::path::{Path, PathBuf};

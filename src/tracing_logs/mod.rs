@@ -91,66 +91,6 @@ impl LogConfig {
     }
 }
 
-// pub fn logger_start(
-//     service_name: &str,
-//     path: Option<String>,
-// ) -> Result<(WorkerGuard, WorkerGuard)> {
-//     let log_dir = match path {
-//         Some(p) => format!("{}/logs", p),
-//         None => format!("logs"),
-//     };
-
-//     fs::create_dir_all(&log_dir).map_err(|_| ClamberError::DirectoryCreationError {
-//         path: log_dir.clone(),
-//     })?;
-
-//     let info_file = rolling::daily(&log_dir, format!("{}-info.log", service_name));
-//     let error_file = rolling::daily(&log_dir, format!("{}-error.log", service_name));
-
-//     let (info_writer, info_guard) = tracing_appender::non_blocking(info_file);
-//     let (error_writer, error_guard) = tracing_appender::non_blocking(error_file);
-
-//     // 创建自定义时间格式：yyyy-MM-dd HH:mm:ss
-//     let timer = ChronoUtc::new("%Y-%m-%d %H:%M:%S".to_string());
-
-//     let info_layer = fmt::layer()
-//         .with_writer(info_writer)
-//         .with_ansi(false)
-//         .with_level(true)
-//         .with_target(true)
-//         .with_thread_ids(false)
-//         .with_timer(timer.clone())
-//         .with_filter(filter_fn(|metadata| {
-//             metadata.level() == &tracing::Level::INFO
-//         }));
-
-//     let error_layer = fmt::layer()
-//         .with_writer(error_writer)
-//         .with_ansi(false)
-//         .with_level(true)
-//         .with_target(true)
-//         .with_thread_ids(false)
-//         .with_timer(timer.clone())
-//         .with_filter(LevelFilter::ERROR);
-
-//     let console_layer = fmt::layer()
-//         .with_ansi(true)
-//         .with_level(true)
-//         .with_target(false) // 控制台不显示模块路径以保持简洁
-//         .with_thread_ids(false)
-//         .with_timer(timer)
-//         .compact() // 使用紧凑格式
-//         .with_filter(LevelFilter::INFO);
-
-//     tracing_subscriber::registry()
-//         .with(info_layer)
-//         .with(error_layer)
-//         .with(console_layer)
-//         .init();
-
-//     Ok((info_guard, error_guard))
-// }
-
 /// 使用自定义配置初始化日志系统
 pub fn logger_start_with_config(
     service_name: &str,
@@ -159,7 +99,7 @@ pub fn logger_start_with_config(
 ) -> Result<(WorkerGuard, WorkerGuard)> {
     let log_dir = match path {
         Some(p) => format!("logs/{}", p),
-        None => format!("logs"),
+        None => "logs".to_string(),
     };
 
     fs::create_dir_all(&log_dir).map_err(|_| ClamberError::DirectoryCreationError {
