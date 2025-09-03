@@ -43,13 +43,13 @@ struct DatabaseConfig {
 use clamber_core::load_config;
 
 // 从 YAML 文件加载
-let config: AppConfig = load_config(\"config.yaml\")?;
+let config: AppConfig = load_config("config.yaml") ?;
 
 // 从 TOML 文件加载  
-let config: AppConfig = load_config(\"config.toml\")?;
+let config: AppConfig = load_config("config.toml") ?;
 
 // 从 JSON 文件加载
-let config: AppConfig = load_config(\"config.json\")?;
+let config: AppConfig = load_config("config.json") ?;
 ```
 
 ### 3. 支持环境变量覆盖
@@ -58,7 +58,7 @@ let config: AppConfig = load_config(\"config.json\")?;
 use clamber_core::load_config_with_env;
 
 // 加载配置文件并支持 APP_ 前缀的环境变量覆盖
-let config: AppConfig = load_config_with_env(\"config.yaml\", \"APP\")?;
+let config: AppConfig = load_config_with_env("config.yaml", "APP") ?;
 
 // 环境变量示例:
 // APP_PORT=8080
@@ -73,18 +73,18 @@ let config: AppConfig = load_config_with_env(\"config.yaml\", \"APP\")?;
 use clamber_core::ConfigBuilder;
 
 let config: AppConfig = ConfigBuilder::new()
-    // 添加多个配置文件（按优先级顺序）
-    .add_yaml_file(\"base.yaml\")
-    .add_yaml_file(\"production.yaml\")
-    // 设置默认值
-    .with_default(\"name\", \"my-app\")?
-    .with_default(\"port\", 8080)?
-    // 启用环境变量覆盖
-    .with_env_prefix(\"APP\")
-    .with_env_separator(\"__\")
-    // 忽略缺失的配置文件
-    .ignore_missing_files(true)
-    .build()?;
+// 添加多个配置文件（按优先级顺序）
+.add_yaml_file("base.yaml")
+.add_yaml_file("production.yaml")
+// 设置默认值
+.with_default("name", "my-app") ?
+.with_default("port", 8080) ?
+// 启用环境变量覆盖
+.with_env_prefix("APP")
+.with_env_separator("__")
+// 忽略缺失的配置文件
+.ignore_missing_files(true)
+.build() ?;
 ```
 
 ### 5. 自动发现配置
@@ -93,7 +93,7 @@ let config: AppConfig = ConfigBuilder::new()
 use clamber_core::auto_load_config;
 
 // 自动查找 myapp.{yaml,yml,toml,json} 配置文件
-let config: AppConfig = auto_load_config(\"myapp\", Some(\"APP\"))?;
+let config: AppConfig = auto_load_config("myapp", Some("APP")) ?;
 ```
 
 ## 配置文件格式
@@ -101,42 +101,42 @@ let config: AppConfig = auto_load_config(\"myapp\", Some(\"APP\"))?;
 ### YAML 格式 (`config.yaml`)
 
 ```yaml
-name: \"my-application\"
+name: "my-application"
 port: 8080
 debug: false
 database:
-  host: \"localhost\"
+  host: "localhost"
   port: 5432
-  username: \"postgres\"
-  password: \"password\"
+  username: "postgres"
+  password: "password"
 ```
 
 ### TOML 格式 (`config.toml`)
 
 ```toml
-name = \"my-application\"
+name = "my-application"
 port = 8080
 debug = false
 
 [database]
-host = \"localhost\"
+host = "localhost"
 port = 5432
-username = \"postgres\"
-password = \"password\"
+username = "postgres"
+password = "password"
 ```
 
 ### JSON 格式 (`config.json`)
 
 ```json
 {
-  \"name\": \"my-application\",
-  \"port\": 8080,
-  \"debug\": false,
-  \"database\": {
-    \"host\": \"localhost\",
-    \"port\": 5432,
-    \"username\": \"postgres\",
-    \"password\": \"password\"
+  "name": "my-application",
+  "port": 8080,
+  "debug": false,
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "password"
   }
 }
 ```
@@ -150,14 +150,16 @@ password = \"password\"
 - 嵌套：使用分隔符表示嵌套结构
 
 例如，对于配置：
+
 ```yaml
 port: 8080
 database:
-  host: \"localhost\"
+  host: "localhost"
   port: 5432
 ```
 
 对应的环境变量为：
+
 ```bash
 APP_PORT=9000
 APP_DATABASE__HOST=db.example.com
@@ -190,7 +192,7 @@ APP_DATABASE__PORT=3306
 ```rust
 #[derive(Debug, Serialize, Deserialize)]
 struct AppConfig {
-    #[serde(deserialize_with = \"validate_port\")]
+    #[serde(deserialize_with = "validate_port")]
     port: u16,
     // 其他字段...
 }
@@ -201,7 +203,7 @@ where
 {
     let port: u16 = u16::deserialize(deserializer)?;
     if port < 1024 {
-        return Err(serde::de::Error::custom(\"端口号必须大于等于1024\"));
+        return Err(serde::de::Error::custom("端口号必须大于等于1024"));
     }
     Ok(port)
 }
@@ -217,7 +219,7 @@ struct AppConfig {
     // 可选的 Redis 配置
     redis: Option<RedisConfig>,
     // 带默认值的配置
-    #[serde(default = \"default_timeout\")]
+    #[serde(default = "default_timeout")]
     timeout: u64,
 }
 
@@ -231,10 +233,10 @@ fn default_timeout() -> u64 {
 ```rust
 use clamber_core::get_config_paths;
 
-// 获取应用 \"myapp\" 的所有可能配置路径
-let paths = get_config_paths(\"myapp\");
+// 获取应用 "myapp" 的所有可能配置路径
+let paths = get_config_paths("myapp");
 for path in paths {
-    println!(\"检查配置文件: {:?}\", path);
+println!("检查配置文件: {:?}", path);
 }
 ```
 
@@ -249,6 +251,7 @@ for path in paths {
 - 不同格式支持
 
 运行示例：
+
 ```bash
 cargo run --example config_example
 ```
