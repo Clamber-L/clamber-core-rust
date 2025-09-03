@@ -1,13 +1,13 @@
 [package]
 name = "clamber-core"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 authors = ["Clamber println_g1@163.com"]
 description = "library for clamber"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/Clamber-L/clamber-core-rust"
 homepage = "https://github.com/Clamber-L/clamber-core-rust"
-documentation = "https://docs.rs/clamber-core-rust"
+documentation = "https://docs.rs/clamber-core"
 readme = "README.md"
 
 [dependencies]

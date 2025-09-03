@@ -1,3 +1,5 @@
+//! tracing 日志模块：提供控制台+文件输出、按日滚动、可配置格式/级别的初始化函数。
+//! 参见 README 以及 examples/beautiful_logs_custom.rs。
 use crate::error::{ClamberError, Result};
 use std::fs;
 use tracing::metadata::LevelFilter;

@@ -1,3 +1,5 @@
+//! Snowflake 模块：线程安全的分布式唯一 ID 生成与解析，支持自定义纪元与批量生成。
+//! 详见根目录 SNOWFLAKE.md 获取更完整说明与示例。
 use crate::error::{ClamberError, Result};
 use serde::{Deserialize, Serialize};
 use std::sync::Mutex;

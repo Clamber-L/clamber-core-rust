@@ -1,3 +1,5 @@
+//! JWT 模块：提供令牌生成、验证和便捷函数；支持自定义密钥与过期时间。
+//! 详见根目录 JWT_README.md 获取更丰富的示例与 API 说明。
 use crate::error::{ClamberError, Result};
 use chrono::{Duration, Utc};
 use hmac::{Hmac, Mac};

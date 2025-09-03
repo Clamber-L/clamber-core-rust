@@ -1,3 +1,5 @@
+//! 配置管理模块：支持多格式配置文件（YAML/TOML/JSON）、环境变量覆盖（可自定义前缀与分隔符）、多文件合并与默认值。
+//! 参见项目根目录的 CONFIG.md 获取更完整的使用指南与示例。
 use crate::error::{ClamberError, Result};
 use config::{Config, Environment, File, FileFormat};
 use serde::Deserialize;

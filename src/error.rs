@@ -1,3 +1,4 @@
+//! 错误类型模块：对库内各子模块的错误进行统一建模，向外暴露 ClamberError 与 Result。
 use thiserror::Error;
 
 /// Clamber Core 库的统一错误类型
